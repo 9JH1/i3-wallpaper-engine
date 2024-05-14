@@ -1,8 +1,9 @@
 import requests
 
-def test_scrape(): 
-
-    URL = "https://realpython.github.io/fake-jobs/"
-    page = requests.get(URL)
-
-    print(page.text)
+def networkBypass():
+    try:
+        result = requests.get("https://steampowered.com")
+    except: 
+        # if steam dose'nt give a response this means that the network is blocking it
+        return False
+    return True
