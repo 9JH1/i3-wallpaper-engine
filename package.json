@@ -1,0 +1,33 @@
+{
+  "devDependencies": {
+    "child-process": "^1.0.2",
+    "electron": "^30.0.4",
+    "electron-notification": "^1.0.0"
+  },
+  "name": "i3-wallpaper-engine",
+  "version": "1.0.0",
+  "description": "wallpaper engine alternative for arch linux i3",
+  "main": "main.js",
+  "dependencies": {
+  },
+  "scripts": {
+    "test": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/9JH1/i3-wallpaper-engine.git"
+  },
+  "keywords": [
+    "wallpaper",
+    "engine",
+    "i3",
+    "archlinux",
+    "linux"
+  ],
+  "author": "3hy/9JH1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/9JH1/i3-wallpaper-engine/issues"
+  },
+  "homepage": "https://github.com/9JH1/i3-wallpaper-engine#readme"
+}
