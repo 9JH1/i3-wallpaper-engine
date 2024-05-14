@@ -1,7 +1,6 @@
 const { app, BrowserWindow, Notification, ipcMain } = require('electron')
 const path = require("path");
-const { execFile } = require("child_process");
-const { create } = require('domain');
+const { execFile } = require('child_process');
 const fs = require('fs');
 let startTime = null;
 let appObj = "";
@@ -22,8 +21,6 @@ const restartApp = () => {
     errorMessage.show()
 };
 
-
-
 function getData(endpoint) {
     return fetch(`http://127.0.0.1:22301${endpoint}`)
         .then((res) => res.text())
@@ -37,8 +34,6 @@ async function createWindow() {
         minWidth: 800,
         maxHeight: 500,
         maxWidth: 800,
-        fullscreenable: false,
-        maximizable: false,
         autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
@@ -47,32 +42,28 @@ async function createWindow() {
             ipcMain: true
         },
         icon: path.join(__dirname, 'icon.ico'),
-        titleBarStyle: "hidden",
-        titleBarOverlay: {
-            color: jsonObjBackground,
-            symbolColor: jsonObjAccent,
-        },
-        transparent: true,
-        frame: false,
     })
 
-    mainWindow.loadFile('/templates/frontend/index.html')
+    mainWindow.loadFile('backend/templates/frontend/index.html')
 }
-app.setAppUserModelId("X3-Toolbox")
+app.setAppUserModelId("i3-wallpaper-engine")
 app.whenReady().then(() => {
     (async () => {
+
+        createWindow()
         function mainApp() {
             startTime = Date.now();
-            let child = execFile("python "+path.join(__dirname, "/backend/main.py"), {
+            let child = execFile("python " + [path.join(__dirname, "backend/main.py")], {
                 detached: true,
                 stdio: "ignore",
             })
+            
             child.unref();
             child.once('spawn', () => {
                 const awaitServer = setInterval(() => {
                     (async () => {
                         appObj = await getData("");
-                        if (appObj != undefined) {
+                        if (appObj == undefined) {
                             awaitServer.close()
                             appObj = JSON.parse(appObj)
                             try {
