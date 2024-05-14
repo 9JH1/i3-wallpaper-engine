@@ -1,13 +1,9 @@
 const { app, BrowserWindow, Notification, ipcMain } = require('electron')
 const path = require("path");
-const { execFile } = require('child_process');
+const { spawn } = require('child_process');
 const fs = require('fs');
 let startTime = null;
 let appObj = "";
-let jsonObj;
-let jsonObjAccent = "";
-let jsonObjBackground = "";
-let jsonData;
 
 const restartApp = () => {
     app.relaunch()
@@ -44,28 +40,24 @@ async function createWindow() {
         icon: path.join(__dirname, 'icon.ico'),
     })
 
-    mainWindow.loadFile('backend/templates/frontend/index.html')
+    mainWindow.loadFile('backend/templates/index.html')
 }
 app.setAppUserModelId("i3-wallpaper-engine")
 app.whenReady().then(() => {
     (async () => {
-
-        createWindow()
         function mainApp() {
             startTime = Date.now();
-            let child = execFile("python " + [path.join(__dirname, "backend/main.py")], {
+            let child = spawn("python", [`${path.join(__dirname, "backend/main.py")}`], {
                 detached: true,
                 stdio: "ignore",
             })
-            
-            child.unref();
             child.once('spawn', () => {
                 const awaitServer = setInterval(() => {
+                    console.log("r on yet");
                     (async () => {
                         appObj = await getData("");
-                        if (appObj == undefined) {
+                        if (appObj != undefined) {
                             awaitServer.close()
-                            appObj = JSON.parse(appObj)
                             try {
                                 createWindow()
                                 console.log(`server took ${(Date.now() - startTime) / 1000}s to launch`);
@@ -74,13 +66,10 @@ app.whenReady().then(() => {
                                 console.log("massive error in themes file, i dunno how to fix it good luck");
                                 const errorMessage = new Notification({
                                     title: "Error",
-                                    body: "app couldn't initialize due to broken themes file",
+                                    body: "app couldn't initialize",
                                     icon: "icon.ico",
                                 })
                                 errorMessage.show();
-                                console.log("");
-                                console.log(jsonObj);
-                                console.log("");
                                 getData("/off")
                                 app.quit();
                             }
