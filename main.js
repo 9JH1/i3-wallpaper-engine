@@ -40,7 +40,7 @@ async function createWindow() {
         icon: path.join(__dirname, 'icon.ico'),
     })
 
-    mainWindow.loadFile('backend/templates/index.html')
+    mainWindow.loadFile('frontend/index.html')
 }
 app.setAppUserModelId("i3-wallpaper-engine")
 app.whenReady().then(() => {

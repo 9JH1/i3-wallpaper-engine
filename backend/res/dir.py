@@ -10,5 +10,9 @@ def getVideos():
     return listOfVids
 
 
-def getVideoInfo(path): 
+def getVideoLength(path): 
     return "info of "+ path
+    
+def getVideoDimensions(path):
+    return "width and length of " + path
+

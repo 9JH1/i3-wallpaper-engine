@@ -1,0 +1,29 @@
+body { 
+   width:100vw; 
+   height:100vh; 
+   background-color: #0f0f0f;
+   color:whitesmoke;
+   padding: 0;
+   margin:0;
+   #content { 
+      width:100%; 
+      height:100%;
+      background-color: transparent;
+      #monitors { 
+         width: 100%;
+         height:5vh;
+         background-color: yellow;
+
+      }
+      #videos { 
+         height:90vh;
+         width:100%; 
+         background-color: red;
+      }
+      #status { 
+         height:5vh;
+         width:100%;
+         background-color: orange;
+      }
+   }
+}
