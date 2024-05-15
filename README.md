@@ -3,11 +3,12 @@
 ## compadability 
 ### - requires X11 based system
 ## requirements
-### - python 3^ 
-- - os
-- - screeninfo 
-- - flask
-- - flask_cors
+- python 3^ 
+ - os
+ - screeninfo 
+ - flask
+ - flask_cors
 - npm 
-- - electron
-- - child_process
+ - electron
+ - child_process
+ 
