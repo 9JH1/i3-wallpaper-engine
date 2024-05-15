@@ -1,8 +1,16 @@
+:root { 
+   --background:black;
+   --text:white;
+   --foreground:rgb(17, 17, 17);
+   --selected: rgb(207, 207, 207);
+   --accent: pink;
+
+}
 body { 
    width:100vw; 
    height:100vh; 
-   background-color: #0f0f0f;
-   color:whitesmoke;
+   background-color: var(--background);
+   color:var(--text);
    padding: 0;
    margin:0;
    overflow:hidden;
@@ -13,7 +21,7 @@ body {
       #monitors { 
          width: 100%;
          height:5vh;
-         background-color: yellow;
+         background-color: var(--foreground);
          display:flex;
          flex-wrap:wrap;
          align-items: center;
@@ -22,14 +30,15 @@ body {
             margin-right:10px;
          }
          .item { 
-            background-color: blue;
+            background-color: var(--background);
+            border:none;
+            color:var(--text);
          }
 
       }
       #videos { 
          height:90vh;
-         width:100%; 
-         background-color: red;
+         width:100%;
          overflow-y:scroll;
          button { 
             display:flex;
@@ -37,18 +46,19 @@ body {
             width:100%;
             justify-content: start;
             position: relative;
+            background-color: var(--text);
             
             .title {
+
             }
             .thumbnail { 
-               background-color: orange;
+               background-color: var(--foreground);
                height:7vh;
                width:7vh;
                margin-right:10px;
 
             }
-            .duration { 
-               background-color: purple;
+            .duration {
                position:absolute;
                right:0;
                
@@ -59,7 +69,7 @@ body {
       #status { 
          height:5vh;
          width:100%;
-         background-color: orange;
+         background-color: var(--foreground);
       }
    }
 }

@@ -1,13 +1,18 @@
 const videos = document.getElementById("videos"); 
+const monitors = document.getElementById("monitors");
 async function getData(endpoint) {
     return fetch(`http://127.0.0.1:22301${endpoint}`)
         .then((res) => res.json())
         .catch((error) => { });
 }
 
-function setInfoBoard(text){ 
+function setInfoBoard(){ 
     const info = document.getElementById("status")
-    info.innerText = text;
+    videos.querySelectorAll(".video-item-real").forEach(element=>{
+        if(element.style.background == "var(--selected)"){
+            info.innerText = element.getElementsByClassName("title")[0].innerText
+        }
+    })
     return true
 }
 
@@ -28,9 +33,10 @@ function setInfoBoard(text){
     videos.querySelectorAll(".video-item-real").forEach(element=>{
         element.addEventListener("click",()=>{
             videos.querySelectorAll(".video-item-real").forEach(elementTwo =>{ 
-                elementTwo.style.background = "green";
+                elementTwo.style.background = "var(--text)";
             })
-            element.style.background = "red";
+            element.style.background = "var(--selected)";
+            setInfoBoard()
         })
     })
 })()

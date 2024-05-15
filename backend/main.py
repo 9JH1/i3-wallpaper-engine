@@ -1,5 +1,5 @@
 from res.scrape import networkBypass
-from res.monitors import *
+from res.monitors import get_monitor_names
 from res.dir import getVideos
 import flask 
 import flask_cors
@@ -10,10 +10,12 @@ app = flask.Flask(__name__)
 CORS = flask_cors.CORS(app)
 
 @app.route("/get_videos")
-def return_dir():
+def return_videos():
     return getVideos()
 
-
+@app.route("/get_monitors")
+def return_monitors(): 
+    return get_monitor_names()
 
 @app.route("/")
 def show_root():

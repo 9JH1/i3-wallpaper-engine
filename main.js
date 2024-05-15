@@ -3,6 +3,7 @@ const path = require("path");
 const { spawn } = require('child_process');
 const fs = require('fs');
 let startTime = null;
+let appStartTime = null;
 let appObj = "";
 
 const restartApp = () => {
@@ -37,6 +38,8 @@ async function createWindow() {
             contextIsolation: false,
             ipcMain: true
         },
+        transparent:true,
+        frame:false,
         icon: path.join(__dirname, 'icon.ico'),
     })
 
@@ -53,17 +56,19 @@ app.whenReady().then(() => {
             })
             child.once('spawn', () => {
                 const awaitServer = setInterval(() => {
-                    console.log("r on yet");
+                    console.log("UwU?");
                     (async () => {
                         appObj = await getData("");
                         if (appObj != undefined) {
                             awaitServer.close()
                             try {
                                 createWindow()
+
+                                appStartTime = Date.now();
                                 console.log(`server took ${(Date.now() - startTime) / 1000}s to launch`);
                             } catch {
 
-                                console.log("massive error in themes file, i dunno how to fix it good luck");
+                                console.log("massive error");
                                 const errorMessage = new Notification({
                                     title: "Error",
                                     body: "app couldn't initialize",
@@ -95,6 +100,7 @@ app.whenReady().then(() => {
     })();
     app.on("before-quit", () => {
         getData("/off");
+        console.log(`application open for ${(Math.floor((Date.now() - appStartTime) / 1000)/60)}m`);
     });
 })
 app.on('window-all-closed', function () {
