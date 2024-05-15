@@ -10,3 +10,5 @@ def getFullResInfo():
 def getFullRes():
     lists = getFullResInfo()
     return [int(lists["width"]),int(lists["height"])]
+
+def getMonitorNames

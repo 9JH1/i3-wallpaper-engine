@@ -5,6 +5,7 @@ body {
    color:whitesmoke;
    padding: 0;
    margin:0;
+   overflow:hidden;
    #content { 
       width:100%; 
       height:100%;
@@ -13,12 +14,47 @@ body {
          width: 100%;
          height:5vh;
          background-color: yellow;
+         display:flex;
+         flex-wrap:wrap;
+         align-items: center;
+         .title { 
+            margin-left:20px;
+            margin-right:10px;
+         }
+         .item { 
+            background-color: blue;
+         }
 
       }
       #videos { 
          height:90vh;
          width:100%; 
          background-color: red;
+         overflow-y:scroll;
+         button { 
+            display:flex;
+            align-items: center;
+            width:100%;
+            justify-content: start;
+            position: relative;
+            
+            .title {
+            }
+            .thumbnail { 
+               background-color: orange;
+               height:7vh;
+               width:7vh;
+               margin-right:10px;
+
+            }
+            .duration { 
+               background-color: purple;
+               position:absolute;
+               right:0;
+               
+            }
+
+         }
       }
       #status { 
          height:5vh;
