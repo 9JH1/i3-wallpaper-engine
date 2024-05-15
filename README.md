@@ -1,12 +1,13 @@
-current requirements 
-python 3^
-python signal 
-python os
-python monitorinfo 
-python flask
-python flask_cors
-npm
-npm electron 
-npm child_process
-npm electron-notification 
-npm fs
+# linux-wallpaper-engine
+### this app allows for simple video wallpapers on Linux. 
+## compadability 
+### - requires X11 based system
+## requirements
+### - python 3^ 
+- - os
+- - screeninfo 
+- - flask
+- - flask_cors
+- npm 
+- - electron
+- - child_process
