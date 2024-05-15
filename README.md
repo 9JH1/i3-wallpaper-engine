@@ -1,7 +1,10 @@
 # linux-wallpaper-engine
-### this app allows for simple video wallpapers on Linux. 
+### this app allows for simple video wallpapers on X11 based Linuxachunes 
 ## compadability 
-### - requires X11 based system
+- requires X11 based system
+- works with polybars rounded corners
+- works with picoms blur
+
 ## requirements
 - python 3^ 
     - os
@@ -11,4 +14,14 @@
 - npm 
     - electron
     - child_process
- 
+- packages
+    - xwinwrap
+    - mpv
+    - xrandr
+    - git
+## Run ( Dev mode )
+```
+git clone https://github.com/9jh1/linux-wallpaper-engine
+cd linux-wallpaper-engine
+./run_dev.sh
+```
