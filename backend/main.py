@@ -1,5 +1,6 @@
 from res.scrape import networkBypass
 from res.monitors import get_monitor_names
+from res.set import set_background
 from res.dir import getVideos
 import flask 
 import flask_cors
@@ -21,8 +22,17 @@ def return_monitors():
 def show_root():
     return "i3-wallpaper-engine"
 
+@app.route("/set/<monitors>/<path:paths>")
+def set_background_route(monitors,paths): 
+    print(monitors)
+    print(paths)
+    set_background(monitor=monitors,path=f"/{paths}")
+
+    return "set"
+
 @app.route(f"/off")
 def stop_server():
+    os.system("killall -q xwinwrap")
     os.kill(os.getpid(), signal.SIGINT)
     return flask.jsonify({"success": True, "message": "Server is shutting down..."})
 

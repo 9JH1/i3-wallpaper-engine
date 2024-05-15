@@ -90,8 +90,9 @@ app.whenReady().then(() => {
         if (await getData("")) {
             console.log("server on")
             while (await getData("")) {
+                
                 getData("/off");
-                console.log("turning off ")
+                console.log("turning off")
             }
             mainApp()
         } else {

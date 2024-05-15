@@ -29,10 +29,14 @@ body {
             margin-left:20px;
             margin-right:10px;
          }
-         .item { 
+         .monitor-item-real { 
             background-color: var(--background);
             border:none;
             color:var(--text);
+         }
+         .monitor-item-real-active { 
+            background-color:var(--selected);
+            color:var(--background);
          }
 
       }

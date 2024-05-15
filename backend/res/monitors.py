@@ -21,3 +21,9 @@ def get_monitor_names():
     monitors = get_monitors()
     names = [f"{monitor.name}" for monitor in monitors]
     return names
+
+def get_single_res_info(monitor_name):
+    for m in get_monitors():
+        if m.name == monitor_name:
+            return {"width": m.width, "height": m.height}
+    return None

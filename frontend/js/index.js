@@ -8,11 +8,36 @@ async function getData(endpoint) {
 
 function setInfoBoard(){ 
     const info = document.getElementById("status")
-    videos.querySelectorAll(".video-item-real").forEach(element=>{
-        if(element.style.background == "var(--selected)"){
-            info.innerText = element.getElementsByClassName("title")[0].innerText
+    let infoText = "Video: "
+    let monitorCount = 0
+    let monitorName = ""
+    let command = "/set/"
+    let commandPath = ""
+
+    monitors.querySelectorAll(".monitor-item-real").forEach(element =>{ 
+        if(element.classList.contains("monitor-item-real-active")){ 
+            monitorCount +=1;
+            monitorName = element.innerText;
         }
     })
+    videos.querySelectorAll(".video-item-real").forEach(element=>{
+        if(element.style.background == "var(--selected)"){
+            infoText += element.getElementsByClassName("title")[0].innerText
+            commandPath = element.getElementsByClassName("title")[0].innerText
+        }
+    })
+    if(monitorCount == 2){ 
+        infoText += " on both monitors"
+        command += "both"
+    } else if (monitorCount == 1) {
+        infoText += ` on ${monitorName}`
+        command += monitorName
+    } else { 
+        infoText += " select a monitor"
+    }
+    info.innerText = infoText;
+    command += commandPath
+    getData(command)
     return true
 }
 
@@ -29,6 +54,7 @@ function setInfoBoard(){
         
         `
         videos.appendChild(nc)
+        
     });
     videos.querySelectorAll(".video-item-real").forEach(element=>{
         element.addEventListener("click",()=>{
@@ -36,6 +62,23 @@ function setInfoBoard(){
                 elementTwo.style.background = "var(--text)";
             })
             element.style.background = "var(--selected)";
+            setInfoBoard()
+        })
+    })
+})();
+
+(async ()=>{
+    const monitor = await getData("/get_monitors"); 
+    console.log(monitor)
+    monitor.forEach(element =>{
+        const nc = document.createElement("button");
+        nc.classList.add("monitor-item-real");
+        nc.innerHTML = element
+        monitors.appendChild(nc);
+    })
+    monitors.querySelectorAll(".monitor-item-real").forEach(element=>{
+        element.addEventListener("click",()=>{
+            element.classList.toggle("monitor-item-real-active")
             setInfoBoard()
         })
     })
