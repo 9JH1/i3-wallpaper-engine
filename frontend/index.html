@@ -7,12 +7,19 @@
 </head>
 <body>
     <div id="content">
-        <div id="monitors">
-            <div class="title">Monitors: </div>
+        <div class="monitors">
+            <div id="monitors">
+                <div class="title">Monitors: </div>
+            </div>
+            <div class="path">
+                <form>
+                    <label for="folderInput">Select a folder:</label>
+                    <input type="file" id="folderInput" name="folder" webkitdirectory directory multiple onchange="handleFolderSelection(event)">
+                </form>
+            </div>
         </div>
-            <div id="videos">videos loading</div>
-            <div id="status"></div>
-            <video src=""></video>
+        <div id="videos">videos loading</div>
+        <div id="status"></div>
     </div>
 </body>
 </html>

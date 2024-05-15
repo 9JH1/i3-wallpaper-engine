@@ -1,18 +1,24 @@
 import os 
 import subprocess
+from moviepy.editor import VideoFileClip
 
-def getVideos():
+def get_video_info(file_path):
+    try:
+        video = VideoFileClip(file_path)
+        duration = video.duration
+        width, height = video.size
+        video.close()
+        return [duration, [width, height]]
+    except Exception as e:
+        return None, None
+
+def get_videos(path):
     listOfVids = []
-    res = str(subprocess.run(["find","/"],capture_output=True).stdout).strip().replace("b'","").replace("'","").split("\\n")
+    res = str(subprocess.run(["find",path],capture_output=True).stdout).strip().replace("b'","").replace("'","").split("\\n")
     for value in res: 
         if value.endswith("mp4"):
             listOfVids.append(value)
     return listOfVids
 
 
-def getVideoLength(path): 
-    return "info of "+ path
-    
-def getVideoDimensions(path):
-    return "width and length of " + path
-
+print(get_video_info("/run/media/_3hy/ARCH_202404/backgrounds/video.mp4"))

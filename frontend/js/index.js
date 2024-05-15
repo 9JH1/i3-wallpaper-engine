@@ -5,7 +5,19 @@ async function getData(endpoint) {
         .then((res) => res.json())
         .catch((error) => { });
 }
-
+function removeFileNameFromPath(path) {
+    // Split the path by '/'
+    const pathParts = path.split('/');
+    
+    // Remove the last part (the filename)
+    pathParts.pop();
+    
+    // Join the remaining parts back into a path string
+    const newPath = pathParts.join('/');
+    
+    return newPath;
+}
+let pathOf = "home/"
 function setInfoBoard(){ 
     const info = document.getElementById("status")
     let infoText = "Video: "
@@ -40,36 +52,36 @@ function setInfoBoard(){
     getData(command)
     return true
 }
-
+function setThings(){
 (async ()=>{
-    const files = await getData('/get_videos')
-    videos.innerHTML = ""
-    files.forEach(element => {
+    const files = await getData(`/get_videos/${pathOf}`)
+    files.forEach(async element => {
+        const fileInfo = await getData(`/video_info/${element}`)
         const nc = document.createElement("button");
         nc.classList.add("video-item-real");
         nc.innerHTML = `
         <video src="${element}" class="thumbnail"></video>
         <p class="title">${element}</p>
-        <p class="duration">00:25:00</p>
+        <p class="duration">
+        ${fileInfo[0]}s, | ${fileInfo[1][0]}x${fileInfo[1][1]}
+        </p>
         
         `
         videos.appendChild(nc)
-        
-    });
-    videos.querySelectorAll(".video-item-real").forEach(element=>{
-        element.addEventListener("click",()=>{
-            videos.querySelectorAll(".video-item-real").forEach(elementTwo =>{ 
-                elementTwo.style.background = "var(--text)";
+        videos.querySelectorAll(".video-item-real").forEach(element=>{
+            element.addEventListener("click",()=>{
+                videos.querySelectorAll(".video-item-real").forEach(elementTwo =>{ 
+                    elementTwo.style.background = "var(--text)";
+                })
+                element.style.background = "var(--selected)";
+                setInfoBoard()
             })
-            element.style.background = "var(--selected)";
-            setInfoBoard()
         })
-    })
+    });
 })();
-
+}
 (async ()=>{
     const monitor = await getData("/get_monitors"); 
-    console.log(monitor)
     monitor.forEach(element =>{
         const nc = document.createElement("button");
         nc.classList.add("monitor-item-real");
@@ -83,3 +95,11 @@ function setInfoBoard(){
         })
     })
 })()
+setThings()
+
+function handleFolderSelection(event) {
+    const fullPath = event.target.files[0].path;
+    pathOf = removeFileNameFromPath(fullPath)
+    setThings()
+}
+
