@@ -19,9 +19,12 @@
     - mpv
     - xrandr
     - git
-## Run ( Dev mode )
+## Build from source 
 ```
 git clone https://github.com/9jh1/linux-wallpaper-engine
 cd linux-wallpaper-engine
 ./run_dev.sh
 ```
+## ToDo
+- remove need for screeninfo module
+- add advanced settings menu
