@@ -45,7 +45,7 @@ def set_background(monitors="both",paths="",audio_level=0):
     videoPos = ""
     screenPos = ""
     command =  ""
-    videoZoom = "2.661" # ~2.66
+    videoZoom = "0.5" # ~2.661
     if vHeight < vWidth: 
         videoOrientation = "horizontal"
     elif vHeight > vWidth:
