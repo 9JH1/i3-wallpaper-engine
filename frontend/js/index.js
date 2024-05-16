@@ -75,14 +75,12 @@ function setThings() {
     (async () => {
         const files = await getData(`/get_videos/${pathOf}`);
         files.forEach(async element => {
-            const fileInfo = "idk" //await getData(`/video_info/${element}`)
             const nc = document.createElement("button");
             nc.classList.add("video-item-real");
             nc.innerHTML = `
-                <!--video src="${element}" data-src="${element}" class="thumbnail"></video-->
-                <p class="title" data-src="${element}">${cutOutPutText(element, 50)}</p>
+                <video src="${element}" data-src="${element}" class="thumbnail"></video>
+                <p class="title" data-src="${element}">${cutOutPutText(element, 500)}</p>
                 <p class="duration">
-                    ${fileInfo[0]}s, | ${fileInfo[1][0]}x${fileInfo[1][1]}
                 </p>
             `;
             videos.appendChild(nc);
@@ -96,7 +94,47 @@ function setThings() {
                 });
                 element.style.background = "var(--selected)";
                 setInfoBoard();
+                
             });
+            function handleIntersection(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const thumbnail = entry.target.querySelector(".thumbnail");
+                        const duration = entry.target.querySelector(".duration");
+                        
+                        if (thumbnail && duration) {
+                            thumbnail.src = thumbnail.dataset.src;
+                            (async () => {
+                                const fileInfo = await getData(`/video_info/${thumbnail.dataset.src}`);
+                                if(fileInfo != undefined){  
+                                    duration.innerText = `${fileInfo[0]} | ${fileInfo[1][0]} x ${fileInfo[1][1]} `
+                                }
+                            })()
+                        }
+                    }
+                });
+            }
+        
+            // Function to handle when the target element exits the viewport
+            function handleExit(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        element.getElementsByClassName("thumbnail")[0].src = ""
+                        
+                    }
+                });
+            }
+        
+            // Create an Intersection Observer
+            const observer = new IntersectionObserver(handleIntersection);
+            const exitObserver = new IntersectionObserver(handleExit);
+        
+            // Specify the target element
+            const target = element;
+        
+            // Start observing the target element
+            observer.observe(target);
+            exitObserver.observe(target);
         });
     })();
 }
