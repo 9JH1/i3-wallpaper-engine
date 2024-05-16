@@ -48,6 +48,7 @@ async function createWindow() {
 app.setAppUserModelId("i3-wallpaper-engine")
 app.whenReady().then(() => {
     (async () => {
+        createWindow()/*
         function mainApp() {
             startTime = Date.now();
             let child = spawn("python", [`${path.join(__dirname, "backend/main.py")}`], {
@@ -87,17 +88,18 @@ app.whenReady().then(() => {
                 app.quit()
             })
         }
+
+        mainApp()
         if (await getData("")) {
             console.log("server on")
             while (await getData("")) {
-                
-                getData("/off");
                 console.log("turning off")
             }
             mainApp()
         } else {
             mainApp()
         }
+        */
     })();
     app.on("before-quit", () => {
         getData("/off");

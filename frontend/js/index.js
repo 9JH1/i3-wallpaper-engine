@@ -1,5 +1,21 @@
 const videos = document.getElementById("videos"); 
 const monitors = document.getElementById("monitors");
+
+
+function cutOutPutText(text, cutNum) {
+    let output = "";
+    for (let i = 0; i < cutNum; i++) {
+        if( i < text.length){
+            output += text[i];
+        }
+    }
+    if(cutNum < text.length){
+        return output + "...";
+    } else {
+        return output;
+    }
+}
+
 async function getData(endpoint) {
     return fetch(`http://127.0.0.1:22301${endpoint}`)
         .then((res) => res.json())
@@ -17,7 +33,8 @@ function removeFileNameFromPath(path) {
     
     return newPath;
 }
-let pathOf = "home/"
+let pathOf = "rootFind22301"
+let countCommand = 0
 function setInfoBoard(){ 
     const info = document.getElementById("status")
     let infoText = "Video: "
@@ -35,7 +52,7 @@ function setInfoBoard(){
     videos.querySelectorAll(".video-item-real").forEach(element=>{
         if(element.style.background == "var(--selected)"){
             infoText += element.getElementsByClassName("title")[0].innerText
-            commandPath = element.getElementsByClassName("title")[0].innerText
+            commandPath = element.getElementsByClassName("title")[0].dataset.src
         }
     })
     if(monitorCount == 2){ 
@@ -48,38 +65,42 @@ function setInfoBoard(){
         infoText += " select a monitor"
     }
     info.innerText = infoText;
-    command += commandPath
+    command += commandPath.replaceAll(" ","%20")
     getData(command)
+    countCommand++
+    info.innerText = countCommand
     return true
 }
-function setThings(){
-(async ()=>{
-    const files = await getData(`/get_videos/${pathOf}`)
-    files.forEach(async element => {
-        const fileInfo = await getData(`/video_info/${element}`)
-        const nc = document.createElement("button");
-        nc.classList.add("video-item-real");
-        nc.innerHTML = `
-        <video src="${element}" class="thumbnail"></video>
-        <p class="title">${element}</p>
-        <p class="duration">
-        ${fileInfo[0]}s, | ${fileInfo[1][0]}x${fileInfo[1][1]}
-        </p>
-        
-        `
-        videos.appendChild(nc)
-        videos.querySelectorAll(".video-item-real").forEach(element=>{
-            element.addEventListener("click",()=>{
-                videos.querySelectorAll(".video-item-real").forEach(elementTwo =>{ 
+function setThings() {
+    (async () => {
+        const files = await getData(`/get_videos/${pathOf}`);
+        files.forEach(async element => {
+            const fileInfo = "idk" //await getData(`/video_info/${element}`)
+            const nc = document.createElement("button");
+            nc.classList.add("video-item-real");
+            nc.innerHTML = `
+                <!--video src="${element}" data-src="${element}" class="thumbnail"></video-->
+                <p class="title" data-src="${element}">${cutOutPutText(element, 50)}</p>
+                <p class="duration">
+                    ${fileInfo[0]}s, | ${fileInfo[1][0]}x${fileInfo[1][1]}
+                </p>
+            `;
+            videos.appendChild(nc);
+        });
+
+        // Attach event listener outside the loop
+        videos.querySelectorAll(".video-item-real").forEach(element => {
+            element.addEventListener("click", () => {
+                videos.querySelectorAll(".video-item-real").forEach(elementTwo => {
                     elementTwo.style.background = "var(--text)";
-                })
+                });
                 element.style.background = "var(--selected)";
-                setInfoBoard()
-            })
-        })
-    });
-})();
+                setInfoBoard();
+            });
+        });
+    })();
 }
+
 (async ()=>{
     const monitor = await getData("/get_monitors"); 
     monitor.forEach(element =>{
@@ -102,4 +123,3 @@ function handleFolderSelection(event) {
     pathOf = removeFileNameFromPath(fullPath)
     setThings()
 }
-

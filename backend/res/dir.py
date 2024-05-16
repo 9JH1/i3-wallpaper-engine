@@ -19,3 +19,9 @@ def get_videos(path):
         if value.endswith("mp4"):
             listOfVids.append(value)
     return listOfVids
+def get_videos_grep(path):
+    try:
+        result = subprocess.run(f"find {path} | grep '.mp4$'", shell=True, capture_output=True, text=True, check=True)
+        return result.stdout.strip().split('\n')
+    except subprocess.CalledProcessError:
+        return []
