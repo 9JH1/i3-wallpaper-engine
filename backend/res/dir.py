@@ -19,6 +19,3 @@ def get_videos(path):
         if value.endswith("mp4"):
             listOfVids.append(value)
     return listOfVids
-
-
-print(get_video_info("/run/media/_3hy/ARCH_202404/backgrounds/video.mp4"))

@@ -56,7 +56,7 @@ app.whenReady().then(() => {
             })
             child.once('spawn', () => {
                 const awaitServer = setInterval(() => {
-                    console.log("UwU?");
+                    console.log("probing");
                     (async () => {
                         appObj = await getData("");
                         if (appObj != undefined) {
