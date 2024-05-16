@@ -33,6 +33,7 @@ def show_root():
 @app.route("/set/<monitors>/<path:paths>")
 def set_background(monitors="both",paths="",audio_level=0):
     print(paths)
+    paths = f"/{paths}"
     paths = paths.replace("%20"," ")
     os.system("killall -q xwinwrap")
     videoInfo = get_video_info(paths)
@@ -45,7 +46,7 @@ def set_background(monitors="both",paths="",audio_level=0):
     videoPos = ""
     screenPos = ""
     command =  ""
-    videoZoom = "0.5" # ~2.661
+    videoZoom = "1" # ~2.661
     if vHeight < vWidth: 
         videoOrientation = "horizontal"
     elif vHeight > vWidth:
@@ -75,5 +76,4 @@ def stop_server():
     os.kill(os.getpid(), signal.SIGINT)
     return flask.jsonify({"success": True, "message": "Server is shutting down..."})
 if __name__ == "__main__":
-    set_background(monitors="both",paths="/run/media/_3hy/Drive/$R4BL23B.mp4")
-    #app.run(port=22301)
+    app.run(port=22301)
