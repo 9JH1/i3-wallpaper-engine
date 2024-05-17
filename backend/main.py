@@ -46,7 +46,7 @@ def set_background(monitors="both",paths="",audio_level=0):
     videoPos = ""
     screenPos = ""
     command =  ""
-    videoZoom = "1" # ~2.661
+    videoZoom = "0.5" # ~2.661
     if vHeight < vWidth: 
         videoOrientation = "horizontal"
     elif vHeight > vWidth:
@@ -54,11 +54,11 @@ def set_background(monitors="both",paths="",audio_level=0):
     else:
         videoOrientation = "square"
     if monitors == "both": 
-        screenPos = f"{int(screenInfo[0]/2)*2}x{screenInfo[1]}+0+0"
+        screenPos = f"{int(screenInfo[0]/2)*2}x{screenInfo[1] - vHeight}+0+0"
     else:
         screenPos = f"{int(screenInfo[0]/2)}x{screenInfo[1]}+0+0"
     if videoOrientation == "horizontal": 
-            videoPos = f"{vWidth}x{vHeight}+{int(vWidth/2)}+0"
+            videoPos = f"{vWidth}x{vHeight}+{int(vWidth/2)}+{int(vHeight)}"
     elif videoOrientation == "vertical":
         videoPos = f"0x0+0+0"
 
