@@ -21,7 +21,7 @@ this app allows for simple video wallpapers on X11 based Linuxachunes
     - git
 ## Build from source 
 ```
-git clone https://github.com/9jh1/linux-wallpaper-engine
+git clone https://github.com/9jh1/i3-wallpaper-engine
 cd linux-wallpaper-engine
 ./install.sh
 ```
