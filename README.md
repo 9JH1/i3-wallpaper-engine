@@ -1,4 +1,4 @@
-# linux-wallpaper-engine
+9# linux-wallpaper-engine
 this app allows for simple video wallpapers on X11 based Linuxachunes 
 ## compadability 
 - requires X11 based system
@@ -23,7 +23,7 @@ this app allows for simple video wallpapers on X11 based Linuxachunes
 ```
 git clone https://github.com/9jh1/linux-wallpaper-engine
 cd linux-wallpaper-engine
-./run_dev.sh
+./install.sh
 ```
 ## Knowen issues
 - in Dev mode, application displays ```loading videos``` if this stays for longer periods of time this could be due to a larger system size
